@@ -15,10 +15,10 @@ def preorder(in_start, in_end, post_start, post_end): #preorder를 출력하는 
     preorder(in_start, in_start + left - 1, post_start, post_start + left - 1)  #새로운 앞 배열에 맞게 preorder 찾기
     preorder(in_end - right + 1, in_end, post_end - right, post_end - 1)        #새로운 뒷 배열에 맞게 preorder 찾기
 
-n = int(sys.stdin.readline()) #입력값
+n = int(sys.stdin.readline()) #정점 개수 입력값
 
-inorder = list(map(int, sys.stdin.readline().split())) #입력값
-postorder = list(map(int, sys.stdin.readline().split())) #입력값
+inorder = list(map(int, sys.stdin.readline().split())) #inorder 입력값
+postorder = list(map(int, sys.stdin.readline().split())) #postorder 입력값
 
 ind = [0] * (n + 1) #ind : 각 번호의 index를 저장해놓은 배열, 매번 index 함수 이용시 시간 초과
 for i in range(n):
