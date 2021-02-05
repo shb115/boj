@@ -19,7 +19,7 @@ def postorder(a):
         print(a, end = '')          
 
 N = int(sys.stdin.readline())
-tree = {}
+tree = dict()
 for _ in range(N):
     a, b, c = sys.stdin.readline().rstrip().split()
     tree[a] = [b, c]
