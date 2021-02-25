@@ -1,4 +1,5 @@
 import sys
+sys.setrecursionlimit(10 ** 6)
 
 def find(x):
     if parent[x] == x:
