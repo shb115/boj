@@ -1,34 +1,35 @@
 import sys
 from heapq import heappush, heappop
 
-def dijkstra(start):    
-    dist[start] = 0    
-    heappush(heap, [0, start])
-    reconstruct[start] = [start]
-    while heap:
-         w, n = heappop(heap)
-         for n_n, wei in road[n]:
-             n_w = w + wei
-             if n_w < dist[n_n]:
-                 dist[n_n] = n_w
-                 reconstruct[n_n] = reconstruct[n] + [n_n]
-                 heappush(heap, [n_w, n_n])
-
 n = int(sys.stdin.readline())
 m = int(sys.stdin.readline())
-road = [[] for _ in range(n + 1)]
+
+cost = [[] for _ in range(n + 1)]
+
 for _ in range(m):
     a, b, c = map(int, sys.stdin.readline().split())
-    road[a].append([b, c])
-start, end = map(int, sys.stdin.readline().split())
-inf = sys.maxsize
-dist = [inf] * (n + 1)
-heap = []
-reconstruct = [[]] * (n + 1)
+    cost[a].append([b, c])
 
-dijkstra(start)
+start, end = map(int, sys.stdin.readline().split())
+
+inf = sys.maxsize
+dist = [inf for _ in range(n + 1)]
+dist[start] = 0
+path = [[] for _ in range(n + 1)]
+path[start] = [start]
+heap = [[0, start]]
+
+while heap:
+    now_cost, now = heappop(heap)
+    if now_cost > dist[now]:
+        continue
+    for Next, next_cost in cost[now]:
+        path_cost = next_cost + now_cost
+        if path_cost < dist[Next]:
+            dist[Next] = path_cost
+            heappush(heap, [path_cost, Next])
+            path[Next] = path[now] + [Next]
 
 print(dist[end])
-print(len(reconstruct[end]))
-for i in reconstruct[end]:
-    print(i, end = ' ')
+print(len(path[end]))
+print(' '.join(map(str, path[end])))
