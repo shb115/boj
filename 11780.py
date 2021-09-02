@@ -3,20 +3,22 @@ import sys
 def find_route(i, j):
     if route[i][j] == 0:
         return []
-
     return find_route(i, route[i][j] - 1) + [route[i][j]] + find_route(route[i][j] - 1, j)
 
 n = int(sys.stdin.readline())
 m = int(sys.stdin.readline())
-cost = [[100000 for _ in range(n)] for __ in range(n)]
+
+inf = sys.maxsize
+
+cost = [[inf for _ in range(n)] for __ in range(n)]
 route = [[0 for _ in range(n)] for __ in range(n)]
+
+for i in range(m):
+    a, b, c = map(int, sys.stdin.readline().split())
+    cost[a - 1][b - 1] = min(cost[a - 1][b - 1], c)
 
 for i in range(n):
     cost[i][i] = 0
-
-for _ in range(m):
-    a, b, c = map(int, sys.stdin.readline().split())
-    cost[a - 1][b - 1] = min(cost[a - 1][b - 1], c)
 
 for k in range(n):
     for i in range(n):
@@ -27,8 +29,10 @@ for k in range(n):
 
 for i in range(n):
     for j in range(n):
+        if cost[i][j] == inf:
+            cost[i][j] = 0
         print(cost[i][j], end = ' ')
-    print('')
+    print()
 
 for i in range(n):
     for j in range(n):
