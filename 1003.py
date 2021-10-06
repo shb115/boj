@@ -1,16 +1,10 @@
-memo = [(1,0),(0,1)] + [(0,0)] * 39
+dp = [[1,0],[0,1]] + [[0,0] for _ in range(39)]
 
-def newfibo(n):
-    global memo
-    if n == 0:
-        return (1,0)
-    else:
-        if memo[n] != (0,0):
-            return memo[n]
-    memo[n] = (newfibo(n - 1)[0] + newfibo(n - 2)[0], newfibo(n - 1)[1] + newfibo(n - 2)[1])
-    return memo[n]
+for i in range(2, 41):
+    dp[i][0] = dp[i - 1][0] + dp[i - 2][0]
+    dp[i][1] = dp[i - 1][1] + dp[i - 2][1]
     
-t = int(input())
-for i in range(t):
-    n = int(input())
-    print(newfibo(n)[0],newfibo(n)[1])
+T = int(input())  #T는 테스트케이스
+for i in range(T):
+    N = int(input()) #N은 문제에서 주어진 N
+    print(dp[N][0],dp[N][1])
